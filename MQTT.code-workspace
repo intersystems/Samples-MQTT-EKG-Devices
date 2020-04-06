@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "MQTT",
+			"path": "."
+		}
+	],
+	"settings": {
+        "active": true, 
+        "label": "LOCAL",
+        "host": "localhost",
+        "port": 52773,
+        "username": "SuperUser",
+        "ns": "INTEROP", // this is the namespace you wish to connect to 
+        "https": false
+    }
+}
