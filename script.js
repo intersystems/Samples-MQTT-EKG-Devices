@@ -26,9 +26,9 @@ function createPatient() {
     card.append(title)
     title.text(name)
     card.append("<h4 Heart Rate></h4>")
-    let range = $(`<input type="range" value="60" min="0" max="300">`)
+    let range = $(`<input type="range" value="60" min="40" max="220">`)
     card.append(range)
-    let heart = $(`<img src='hrt.jpg' style="width:20px;height:20px; display: inline">`)
+    let heart = $(`<img src='hrt.jpg' style="width:15px;height:15px; display: inline">`)
     heartID = `Heart-${name}`
     heart.attr("id", heartID)
     heart.hide()
