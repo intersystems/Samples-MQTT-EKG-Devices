@@ -6,12 +6,16 @@
 		}
 	],
 	"settings": {
-        "active": true, 
-        "label": "LOCAL",
-        "host": "localhost",
-        "port": 52773,
-        "username": "SuperUser",
-        "ns": "INTEROP", // this is the namespace you wish to connect to 
-        "https": false
+        "objectscript.conn": {
+            "active": true, 
+            "label": "LOCAL",
+            "host": "localhost",
+            "port": 52775,
+            "username": "SuperUser",
+            "ns": "USER", // this is the namespace you wish to connect to 
+            "https": false,
+            "objectscript.conn.docker-compose.internalPort": 52775
+        }
+        
     }
 }

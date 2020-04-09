@@ -10,6 +10,8 @@ Property BPM As %Integer;
 Property TimeStamp As %DateTime [ InitialExpression = {$ZDATETIME($ZTIMESTAMP)} ];
 
 Storage Default
+
+// %on after save
 {
 <Data name="HeartRateDefaultData">
 <Value name="1">
