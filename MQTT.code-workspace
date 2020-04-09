@@ -10,7 +10,7 @@
             "active": true, 
             "label": "LOCAL",
             "host": "localhost",
-            "port": 52775,
+            "port": 52773,
             "username": "SuperUser",
             "ns": "USER", // this is the namespace you wish to connect to 
             "https": false,
