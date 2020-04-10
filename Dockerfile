@@ -13,7 +13,7 @@ WORKDIR /opt/app
 
 COPY ./Setup.cls ./
 COPY ./src ./src/
-
+COPY ./Installer.cls ./
 
 
 

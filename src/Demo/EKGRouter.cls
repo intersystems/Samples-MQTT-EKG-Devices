@@ -1,5 +1,5 @@
 /// 
-Class Demo.EKGRouter Extends Ens.BusinessProcessBPL
+Class Demo.EKGRouter Extends Ens.BusinessProcessBPL [ CompileAfter = Demo.HeartRate ]
 {
 
 /// BPL Definition

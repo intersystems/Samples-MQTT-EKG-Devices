@@ -1,39 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="IRIS" version="26" zv="IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2020.1 (Build 215U)" ts="2020-04-07 19:17:14">
-<Class name="Demo.BPL">
-<Description>
-</Description>
-<Super>Ens.BusinessProcessBPL</Super>
-<TimeChanged>65476,64346.163279</TimeChanged>
-<TimeCreated>65475,64613.933081</TimeCreated>
-
-<XData name="BPLError">
-<Description>
-This BPLError block indicates that a BPL Diagram 
-containing errors was saved.
-To correct this class:
-* Open it using the Studio BPL Editor,
-* Correct the errors, and,
-* Save the diagram.
-Do not edit the contents of the BPLError block
-or you may lose your diagram.</Description>
-<Data><![CDATA[
-<diagram Name="Demo.BPL" Width="2000" Height="2000" Layout="automatic" Language="objectscript" Request="Ens.Request" Response="Ens.Response" LastModified="" Version="" Includes="" ShowAnnotation="0">
-<shape _index="0" _Type="start" Name="" xPos="200" yPos="150" />
-<shape _index="1" _Type="end" Name="" xPos="185" yPos="331" />
-<shape _index="2" _Type="continue" Name="res" xPos="268" yPos="251" />
-<connection _Type="connector" Name="" from="0" to="2"/>
-<connection _Type="connector" Name="" from="2" to="1"/>
-</diagram>
-]]></Data>
-</XData>
-
-<Storage name="Default">
-<Type>%Storage.Persistent</Type>
-</Storage>
-</Class>
-
-
+<Export generator="IRIS" version="26" zv="IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2020.1 (Build 215U)" ts="2020-04-10 13:34:16">
 <Class name="Demo.EKGRouter">
 <Description>
 </Description>
@@ -79,7 +45,7 @@ BPL Definition</Description>
 
 <Class name="Demo.EnsMessageToReading">
 <Super>Ens.DataTransformDTL</Super>
-<TimeChanged>65476,69384.09594</TimeChanged>
+<TimeChanged>65479,48758.066203</TimeChanged>
 <TimeCreated>65476,65426.882794</TimeCreated>
 <DependsOn>EnsLib.MQTT.Message,Demo.HeartRate</DependsOn>
 
@@ -99,7 +65,7 @@ BPL Definition</Description>
 <XMLNamespace>http://www.intersystems.com/dtl</XMLNamespace>
 <Data><![CDATA[
 <transform sourceClass='EnsLib.MQTT.Message' targetClass='Demo.HeartRate' create='new' language='objectscript' >
-<assign value='..Piece(source.Topic,"/",4)' property='target.Provider' action='set' />
+<assign value='..Piece(source.Topic,"/",4)' property='target.PatientID' action='set' />
 <assign value='source.StringValue' property='target.BPM' action='set' />
 <assign value='..Lookup("Providers",target.PatientID)' property='target.Provider' action='set' />
 </transform>
@@ -161,7 +127,7 @@ BPL Definition</Description>
 
 <Class name="Demo.MQTT">
 <Super>Ens.Production</Super>
-<TimeChanged>65476,67917.880756</TimeChanged>
+<TimeChanged>65479,48563.432601</TimeChanged>
 <TimeCreated>65475,64378.915378</TimeCreated>
 
 <XData name="ProductionDefinition">
@@ -177,45 +143,85 @@ BPL Definition</Description>
   </Item>
   <Item Name="Demo.EKGRouter" Category="" ClassName="Demo.EKGRouter" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
   </Item>
+  <Item Name="Demo.MetricMQTT" Category="" ClassName="Demo.MetricMQTT" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  </Item>
 </Production>
 ]]></Data>
 </XData>
 </Class>
 
 
-<Project name="EnsExportProduction_2020-04-07 19-16-37_526+0" LastModified="2020-04-07 19:17:14.868305">
-  <ProjectDescription>Studio Project generated from Production 'Demo.MQTT' at 2020-04-07 19:16:37.526 UTC</ProjectDescription>
+<Class name="Demo.MetricMQTT">
+<Super>Ens.BusinessMetric</Super>
+<TimeChanged>65479,48618.748761</TimeChanged>
+<TimeCreated>65479,48253.129968</TimeCreated>
+
+<Parameter name="HISTORY">
+<Default>50</Default>
+</Parameter>
+
+<Property name="BPM">
+<Type>Ens.DataType.Metric</Type>
+</Property>
+
+<Method name="OnCalculateMetrics">
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+    set patient = ..%Instance
+
+    // find recent sales using SQL
+     &SQL(SELECT BPM INTO :bpm
+              FROM Demo.HeartRate
+              WHERE PatientID = :patient)
+    
+    set ..BPM = bpm
+
+    return $$$OK
+]]></Implementation>
+</Method>
+
+<Query name="MetricInstances">
+<Description>
+Return current list of product names</Description>
+<Type>%SQLQuery</Type>
+<SqlQuery>  select distinct patientID from Demo.HeartRate</SqlQuery>
+</Query>
+</Class>
+
+
+<Project name="EnsExportProduction_2020-04-10 13-33-45_702+0" LastModified="2020-04-10 13:34:16.253293">
+  <ProjectDescription>Studio Project generated from Production 'Demo.MQTT' at 2020-04-10 13:33:45.702 UTC</ProjectDescription>
   <Items>
-    <ProjectItem name="Demo.BPL" type="CLS"></ProjectItem>
     <ProjectItem name="Demo.EKGRouter" type="CLS"></ProjectItem>
     <ProjectItem name="Demo.EnsMessageToReading" type="CLS"></ProjectItem>
     <ProjectItem name="Demo.HeartRate" type="CLS"></ProjectItem>
     <ProjectItem name="Demo.MQTT" type="CLS"></ProjectItem>
+    <ProjectItem name="Demo.MetricMQTT" type="CLS"></ProjectItem>
     <ProjectItem name="ProductionSettings:Demo.MQTT.PTD" type="PTD"></ProjectItem>
-    <ProjectItem name="EnsExportNotes.EnsExportProduction_2020-04-07 19-16-37_526+0.PTD" type="PTD"></ProjectItem>
+    <ProjectItem name="EnsExportNotes.EnsExportProduction_2020-04-10 13-33-45_702+0.PTD" type="PTD"></ProjectItem>
   </Items>
 </Project>
 
 
-<Document name="EnsExportNotes.EnsExportProduction_2020-04-07 19-16-37_526+0.PTD"><ProjectTextDocument name="EnsExportNotes.EnsExportProduction_2020-04-07 19-16-37_526+0" description="Export Notes for export EnsExportProduction_2020-04-07 19-16-37_526+0">
+<Document name="EnsExportNotes.EnsExportProduction_2020-04-10 13-33-45_702+0.PTD"><ProjectTextDocument name="EnsExportNotes.EnsExportProduction_2020-04-10 13-33-45_702+0" description="Export Notes for export EnsExportProduction_2020-04-10 13-33-45_702+0">
 <![CDATA[<Deployment>
 <Creation>
-<Machine>5782CAC85F39</Machine>
+<Machine>5545AAC471EF</Machine>
 <Instance>IRIS</Instance>
 <Namespace>USER</Namespace>
 <SourceProduction>Demo.MQTT</SourceProduction>
 <Username>SuperUser</Username>
-<UTC>2020-04-07 19:17:14.866</UTC>
+<UTC>2020-04-10 13:34:16.252</UTC>
 </Creation>
 <Notes>
 </Notes>
 <Contents>
-<ExportProject>EnsExportProduction_2020-04-07 19-16-37_526+0</ExportProject>
-<Item num="1">Demo.BPL.CLS</Item>
-<Item num="2">Demo.EKGRouter.CLS</Item>
-<Item num="3">Demo.EnsMessageToReading.CLS</Item>
-<Item num="4">Demo.HeartRate.CLS</Item>
-<Item num="5">Demo.MQTT.CLS</Item>
+<ExportProject>EnsExportProduction_2020-04-10 13-33-45_702+0</ExportProject>
+<Item num="1">Demo.EKGRouter.CLS</Item>
+<Item num="2">Demo.EnsMessageToReading.CLS</Item>
+<Item num="3">Demo.HeartRate.CLS</Item>
+<Item num="4">Demo.MQTT.CLS</Item>
+<Item num="5">Demo.MetricMQTT.CLS</Item>
 <Item num="6">ProductionSettings:Demo.MQTT.PTD</Item>
 </Contents>
 <ProductionClassInExport>Demo.MQTT</ProductionClassInExport>

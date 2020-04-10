@@ -14,6 +14,9 @@ XData ProductionDefinition
   </Item>
   <Item Name="Demo.EKGRouter" Category="" ClassName="Demo.EKGRouter" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
   </Item>
+  <Item Name="Demo.MetricMQTT" Category="" ClassName="Demo.MetricMQTT" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+    <Setting Target="Adapter" Name="CallInterval">1</Setting>
+  </Item>
 </Production>
 }
 

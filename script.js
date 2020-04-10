@@ -19,20 +19,20 @@ function patient(bpm, name) {
 }
 function createPatient() {
     let name = `Patient-${patientArray.length}`
-    
-    let p = new patient(60,name)
+    let bpm = Math.floor(Math.random()*220) + 40 
+    let p = new patient(bpm,name)
     let card = $("<div style='margin:20px; width: 500px; border-style: solid'>")
     let title = $("<h3>")
     card.append(title)
     title.text(name)
     card.append("<h4 Heart Rate></h4>")
-    let range = $(`<input type="range" value="60" min="40" max="220">`)
+    let range = $(`<input type="range" value="${bpm}" min="40" max="220">`)
     card.append(range)
     let heart = $(`<img src='hrt.jpg' style="width:15px;height:15px; display: inline">`)
     heartID = `Heart-${name}`
     heart.attr("id", heartID)
     heart.hide()
-    let bpmOutput = $('<p>60</p>')
+    let bpmOutput = $(`<p>${bpm}</p>`)
     bpmOutput.append(heart)
     
     range.on("input",function(self){
@@ -65,19 +65,20 @@ function createPatient() {
 
 }
 
+let patientNum = 3
+for (let i=0; i < patientNum; i ++) {
+    
+    createPatient()
+}
 
-
-createPatient()
 
 function heartbeat(heartID){
     let selector = "#" + heartID
-    console.log( selector)
     let h = $(selector)
     h.show()
     setTimeout(()=>{h.hide()}, 50)
     
-    // heart.hide()
-    // console.log('test')
+
 
     
 }
