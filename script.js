@@ -8,7 +8,11 @@
 // }
 
 
-
+let sessionID=""
+// sessionID = Math.random()*10000000000000000
+let masterTopic = `${sessionID}/acmeHospital/EKG/`
+let subTopic = masterTopic + "#"
+$("#topicIDString").text(subTopic) 
 var patientArray = [
 ]
 
@@ -101,7 +105,8 @@ client.connect();
 // send message
 
 function sendEkgReadings(){
-    let masterTopic = "/acmeHospital/EKG/"
+    
+    
     patientArray.forEach((patient)=>{
         
         let topic = masterTopic + patient.name

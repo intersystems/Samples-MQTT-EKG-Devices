@@ -12,7 +12,7 @@
             "host": "localhost",
             "port": 52773,
             "username": "SuperUser",
-            "ns": "USER", // this is the namespace you wish to connect to 
+            "ns": "INTEROP", // this is the namespace you wish to connect to 
             "https": false,
             "objectscript.conn.docker-compose.internalPort": 52775
         }

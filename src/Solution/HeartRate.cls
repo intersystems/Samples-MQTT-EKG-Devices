@@ -1,4 +1,4 @@
-Class Demo.HeartRate Extends (Ens.Response, %Populate)
+Class Solution.HeartRate Extends (Ens.Response, %Populate)
 {
 
 Property PatientID As %String;
