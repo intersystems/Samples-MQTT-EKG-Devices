@@ -10,7 +10,7 @@
 
 let sessionID=""
 // sessionID = Math.random()*10000000000000000
-let masterTopic = `${sessionID}/acmeHospital/EKG/`
+let masterTopic = `/acmeHospital/EKG/`
 let subTopic = masterTopic + "#"
 $("#topicIDString").text(subTopic) 
 var patientArray = [
@@ -86,20 +86,42 @@ function heartbeat(heartID){
 
     
 }
-
+function OnConnect(){
+    console.log("CONNECTED SUCESSFULLY")
+}
 // MQTT actions
 var mLocation = {
-    hostname: "mqtt.eclipse.org",
-    port: "80",
-    path: "/mqtt"
+    hostname: "127.0.0.1",
+    port: "9001",
+    path: "/"
 }
     // Create a client instance
 client = new Paho.MQTT.Client(mLocation.hostname, Number(mLocation.port), mLocation.path, "clientID");
+client.onConnected = OnConnect
 
+client.onConnectionLost = function (responseObject) {
+    debug("CONNECTION LOST - " + responseObject.errorMessage);
+};
+client.onMessageArrived = function (message) {
+    console.log("RECEIVE ON " + message.destinationName + " PAYLOAD " + message.payloadString);
+    print_first(message.payloadString);
+};
 
-
+var options = {
+    timeout: 3,
+    keepAliveInterval: 30,
+    onSuccess: function () {
+        ("CONNECTION SUCCESS");
+        client.subscribe('/topic/test', {qos: 1});
+    },
+    onFailure: function (message) {
+        console.log("CONNECTION FAILURE - " + message.errorMessage);
+    }
+};
 // connect the client
-client.connect();
+client.connect(options);
+
+
 
 
 // send message

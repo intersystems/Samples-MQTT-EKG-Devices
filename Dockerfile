@@ -1,11 +1,11 @@
 FROM store/intersystems/irishealth-community:2020.1.0.215.0
 
 USER root
-# https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=ADOCK_iris_iscmain
+
+WORKDIR /datvol
+
+
 RUN mkdir /opt/app && chown irisowner:irisowner /opt/app
-
-
-
 USER irisowner
 
 WORKDIR /opt/app
