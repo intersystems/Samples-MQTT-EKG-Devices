@@ -2,11 +2,8 @@ FROM store/intersystems/irishealth-community:2020.1.0.215.0
 
 USER root
 
-WORKDIR /datvol
-
-
 RUN mkdir /opt/app && chown irisowner:irisowner /opt/app
-USER irisowner
+
 
 WORKDIR /opt/app
 
@@ -14,6 +11,7 @@ WORKDIR /opt/app
 COPY ./Setup.cls ./
 COPY ./src ./src/
 COPY ./Installer.cls ./
+
 
 
 
