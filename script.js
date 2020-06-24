@@ -1,16 +1,5 @@
-// var sPatient1 = document.getElementById("patient1");
-// var sPatient1output = document.getElementById("patient1BPM");
-// sPatient1output.innerHTML = sPatient1.value; // Display the default slider value
 
-// Update the current slider value (each time you drag the slider handle)
-// sPatient1.oninput = function() {
-//     sPatient1output.innerHTML = this.value;
-// }
-
-
-let sessionID=""
-// sessionID = Math.random()*10000000000000000
-let masterTopic = `/acmeHospital/EKG/`
+let masterTopic = sessionID + `/acmeHospital/EKG/`
 let subTopic = masterTopic + "#"
 $("#topicIDString").text(subTopic) 
 var patientArray = [

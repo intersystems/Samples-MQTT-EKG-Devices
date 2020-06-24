@@ -9,13 +9,18 @@
         "objectscript.conn": {
             "active": true, 
             "label": "LOCAL",
-            "host": "localhost",
-            "port": 52773,
-            "username": "SuperUser",
-            "ns": "INTEROP", // this is the namespace you wish to connect to 
+            "host": "52773-1-7755acec.staging-labs.learning.intersystems.com",
+            "port": 80,
+            "username": "tech",
+            "password" : "demo",
+            "ns": "USER", // this is the namespace you wish to connect to 
             "https": false,
-            "objectscript.conn.docker-compose.internalPort": 52773
-        }
+            
+        },
+        // "objectscript.conn.password": "demo",
+        // "objectscript.conn.docker-compose.service": "iris",
+        // "objectscript.conn.active": true
         
-    }
+    },
+    "objectscript.conn.docker-compose": {}
 }
