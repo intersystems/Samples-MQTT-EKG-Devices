@@ -5,7 +5,9 @@ USER root
 RUN mkdir /opt/app && chown irisowner:irisowner /opt/app
 
 
+USER irisowner
 WORKDIR /opt/app
+
 
 
 COPY ./Setup.cls ./
