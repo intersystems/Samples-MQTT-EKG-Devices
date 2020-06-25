@@ -1,5 +1,7 @@
 
-let masterTopic = sessionID + `/acmeHospital/EKG/`
+
+
+let masterTopic = SessionID + `/acmeHospital/EKG/`
 let subTopic = masterTopic + "#"
 $("#topicIDString").text(subTopic) 
 var patientArray = [
@@ -80,8 +82,8 @@ function OnConnect(){
 }
 // MQTT actions
 var mLocation = {
-    hostname: "127.0.0.1",
-    port: "9001",
+    hostname: "mqtt.eclipse.org/mqtt",
+    port: "80",
     path: "/"
 }
     // Create a client instance

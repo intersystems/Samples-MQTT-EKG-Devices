@@ -27,6 +27,7 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME quietly EmergencyId=sys,sys && \
             "set sc = ##class(Setup).Initialize(1)\n"\
             " If 'sc do \$zu(4, \$JOB, 1)\n" \
             " halt" \
+            
     | iris session $ISC_PACKAGE_INSTANCENAME && \
     /bin/echo -e "sys\nsys\n" \
     | iris stop $ISC_PACKAGE_INSTANCENAME quietly
