@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"name": "MQTT",
+			"path": "."
+		}
+	],
+	"settings": {
+        "objectscript.conn": {
+            "active": true, 
+            "label": "LOCAL",
+            "host": "localhost",
+            "port": 52773,
+            "username": "SuperUser",
+            "password" : "SYS",
+            "ns": "INTEROP", // this is the namespace you wish to connect to 
+            "https": false,
+            
+        },
+        "objectscript.conn.password": "demo",
+        "objectscript.conn.docker-compose.service": "iris",
+        "objectscript.conn.active": true
+        
+    },
+    "objectscript.conn.docker-compose": {}
+}
