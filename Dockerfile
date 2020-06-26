@@ -26,10 +26,9 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME quietly EmergencyId=sys,sys && \
             " Set p(\"AutheEnabled\")=\$zboolean(p(\"AutheEnabled\"),16,7)\n" \
             " Do ##class(Security.System).Modify(,.p)\n" \
             " Do \$system.OBJ.Load(\"/opt/app/Setup.cls\", \"ck\")\n" \
-            "set sc = ##class(Setup).Initialize(1)\n"\
+            "set sc = ##class(Setup.Init).Initialize()\n"\
             " If 'sc do \$zu(4, \$JOB, 1)\n" \
-            " halt" \
-            
+            " halt" \ 
     | iris session $ISC_PACKAGE_INSTANCENAME && \
     /bin/echo -e "sys\nsys\n" \
     | iris stop $ISC_PACKAGE_INSTANCENAME quietly

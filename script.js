@@ -1,6 +1,7 @@
 
 
-
+// The below script requires a declaration of a variable in a config.js file. Do not attempt to run 
+// this script before initializing this variable.
 let masterTopic = SessionID + `/acmeHospital/EKG/`
 let subTopic = masterTopic + "#"
 $("#topicIDString").text(subTopic) 
@@ -100,6 +101,7 @@ client.onMessageArrived = function (message) {
 
 var options = {
     timeout: 3,
+    useSSL: true,
     keepAliveInterval: 30,
     onSuccess: function () {
         ("CONNECTION SUCCESS");
