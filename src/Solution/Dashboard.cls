@@ -1,5 +1,5 @@
 Include %DeepSee
-
+/// Dashboard XML, should be viewed in the analytics interface.
 Class Solution.Dashboard Extends %DeepSee.UserLibrary.Container [ Not ProcedureBlock ]
 {
 

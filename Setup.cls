@@ -22,7 +22,7 @@ ClassMethod InitializeLearningLab() As %Status
         zn "INTEROP"
         set st = ##class(Ens.Director).StopProduction()
         $$$ThrowOnError(st)
-        set st = $System.OBJ.LoadDir("/home/project/shared/Samples-MQTT-EKG-Devices", "ck", ,1)
+        set st = $System.OBJ.LoadDir("/home/project/shared/Samples-MQTT-EKG-Devices/src", "ck", ,1)
          $$$ThrowOnError(st)
         set namespace = $ZNspace
         set app = $System.CSP.GetDefaultApp(namespace) _ "/"
@@ -39,7 +39,7 @@ ClassMethod InitializeLearningLab() As %Status
         
 
         
-        Set file=##class(%File).%New("/home/project/shared/Samples-MQTT-EKG-Devices/config.js")
+        Set file=##class(%File).%New("/home/project/shared/Samples-MQTT-EKG-Devices/App/config.js")
         Do file.Open("WSN")
         $$$ThrowOnError(st)
         Do file.WriteLine("let TopicString = "_""""_TopicString_"""")
@@ -55,7 +55,7 @@ ClassMethod DockerInit() As %Status
         set TopicString = "/" _ StudentID _ "/acmeHospital/EKG/#"
         set pSettings("From_EKG_MQTT","Adapter", "Topic")= TopicString
         set st =##class(Solution.MQTT).ApplySettings("Solution.MQTT", .pSettings)
-        Set file=##class(%File).%New("/datavol/config.js")
+        Set file=##class(%File).%New("/datavol/App/config.js")
         Do file.Open("WSN")
         Do file.WriteLine("let TopicString = "_""""_ TopicString _"""")
 

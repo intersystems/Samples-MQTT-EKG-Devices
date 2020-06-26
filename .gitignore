@@ -1,2 +1,3 @@
-mqtt/mosquitto.log
+
 config.js
+.gitignore

@@ -1,4 +1,4 @@
-/// 
+/// Data transformation class. Should be viewed in the management portal DTL builder interface.
 Class Solution.ProcessMQTTMessage Extends Ens.BusinessProcessBPL [ CompileAfter = Solution.HeartRate ]
 {
 

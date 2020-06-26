@@ -1,3 +1,4 @@
+/// Data transformation class. Should be viewed in the management portal DTL builder interface.
 Class Solution.MQTTMessageToReading Extends Ens.DataTransformDTL [ DependsOn = (EnsLib.MQTT.Message, Solution.HeartRate) ]
 {
 
