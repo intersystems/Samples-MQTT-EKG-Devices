@@ -2,8 +2,9 @@
 
 // The below script requires a declaration of a variable in a config.js file. Do not attempt to run 
 // this script before initializing this variable.
-let masterTopic = SessionID + `/acmeHospital/EKG/`
-let subTopic = masterTopic + "#"
+
+let subTopic = TopicString
+let masterTopic = TopicString
 $("#topicIDString").text(subTopic) 
 var patientArray = [
 ]
@@ -38,7 +39,7 @@ function createPatient() {
        let bps = parseInt(p.BPM)/60
        
        let interval = 1000/bps
-       console.log(heart)
+       
        clearInterval(i)
        bpmOutput.append(heart)
        i = setInterval(heartbeat, interval, heartID)
@@ -92,7 +93,7 @@ client = new Paho.MQTT.Client(mLocation.hostname, Number(mLocation.port), mLocat
 client.onConnected = OnConnect
 
 client.onConnectionLost = function (responseObject) {
-    debug("CONNECTION LOST - " + responseObject.errorMessage);
+    console.log("CONNECTION LOST - " + responseObject.errorMessage);
 };
 client.onMessageArrived = function (message) {
     console.log("RECEIVE ON " + message.destinationName + " PAYLOAD " + message.payloadString);
@@ -124,7 +125,7 @@ function sendEkgReadings(){
     
     patientArray.forEach((patient)=>{
         
-        let topic = masterTopic + patient.name
+        let topic = masterTopic.replace("#",  patient.name)
         let message = new Paho.MQTT.Message(patient.BPM.toString())
         message.destinationName = topic
         

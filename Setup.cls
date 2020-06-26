@@ -33,7 +33,8 @@ ClassMethod InitializeLearningLab() As %Status
         set StudentID = ##class(%SYSTEM.Util).GetEnviron("AVL_STUDENT_ID")
         set StudentID = $Piece(StudentID, "@", 1)
         
-        set pSettings("From_EKG_MQTT","Adapter", "Topic")= StudentID _ "/acmeHospital/EKG/#"
+        set TopicString = "/" _ StudentID _ "/acmeHospital/EKG/#"
+        set pSettings("From_EKG_MQTT","Adapter", "Topic")= TopicString
         set st =##class(Solution.MQTT).ApplySettings("Solution.MQTT", .pSettings)
         
 
@@ -41,25 +42,26 @@ ClassMethod InitializeLearningLab() As %Status
         Set file=##class(%File).%New("/home/project/shared/Samples-MQTT-EKG-Devices/config.js")
         Do file.Open("WSN")
         $$$ThrowOnError(st)
-        Do file.WriteLine("let SessionID = "_""""_StudentID_"""")
+        Do file.WriteLine("let TopicString = "_""""_TopicString_"""")
 
         write !,!,!, "You have successfully initialed the MQTT exercise", ! 
-        write "Please take note of your topic top-level string: " _StudentID _ "/acmeHospital/EKG/#"
+        write "Please take note of your topic top-level string: " _ TopicString
 }
 
 ClassMethod DockerInit() As %Status
 {
-       
+        zn "INTEROP"
         set StudentID = "Student_" _ $Random(100)
-
-        set pSettings("From_EKG_MQTT","Adapter", "Topic")= StudentID _ "/acmeHospital/EKG/#"
+        set TopicString = "/" _ StudentID _ "/acmeHospital/EKG/#"
+        set pSettings("From_EKG_MQTT","Adapter", "Topic")= TopicString
         set st =##class(Solution.MQTT).ApplySettings("Solution.MQTT", .pSettings)
         Set file=##class(%File).%New("/datavol/config.js")
         Do file.Open("WSN")
-        Do file.WriteLine("let SessionID = "_""""_StudentID_"""")
+        Do file.WriteLine("let TopicString = "_""""_ TopicString _"""")
 
         write "You have successfully initialed the MQTT exercise", ! 
-        write "Please take note of your topic top-level string: " _StudentID _ "/acmeHospital/EKG/#"
+        write "Please take note of your topic top-level string: " _ TopicString
+        write "test",  !, !
 }
 
 }
