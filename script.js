@@ -9,7 +9,7 @@ $("#topicIDString").text(subTopic)
 var patientArray = [
 ]
 
-function patient(bpm, name) {
+function Patient(bpm, name) {
     this.BPM = bpm;
     this.name = name;
     
@@ -17,7 +17,7 @@ function patient(bpm, name) {
 function createPatient() {
     let name = `Patient-${patientArray.length}`
     let bpm = Math.floor(Math.random()*220) + 40 
-    let p = new patient(bpm,name)
+    let patient = new Patient(bpm,name)
     let card = $("<div style='margin:20px; width: 500px; border-style: solid'>")
     let title = $("<h3>")
     card.append(title)
@@ -26,23 +26,23 @@ function createPatient() {
     let range = $(`<input type="range" value="${bpm}" min="40" max="220">`)
     card.append(range)
     let heart = $(`<img src='hrt.jpg' style="width:15px;height:15px; display: inline">`)
-    heartID = `Heart-${name}`
+    let heartID = `Heart-${name}`
     heart.attr("id", heartID)
     heart.hide()
     let bpmOutput = $(`<p>${bpm}</p>`)
     bpmOutput.append(heart)
     
     range.on("input",function(self){
-       p.BPM = range.val()
-       bpmOutput.text(p.BPM)
+       patient.BPM = range.val()
+       bpmOutput.text(patient.BPM)
 
-       let bps = parseInt(p.BPM)/60
+       let bps = parseInt(patient.BPM)/60
        
        let interval = 1000/bps
        
-       clearInterval(i)
+       clearInterval(intervalObject)
        bpmOutput.append(heart)
-       i = setInterval(heartbeat, interval, heartID)
+       intervalObject = setInterval(heartbeat, interval, heartID)
     })
     
     card.append("<br>")
@@ -53,20 +53,16 @@ function createPatient() {
     
 
     $("#patients").append(card)
-    patientArray.push(p)
-    let bps = p.BPM/60
+    patientArray.push(patient)
+    let bps = patient.BPM/60
     let interval = 1000/bps
     
-    let i = setInterval(heartbeat, interval, heartID)
+    let intervalObject = setInterval(heartbeat, interval, heartID)
     
 
 }
 
-let patientNum = 3
-for (let i=0; i < patientNum; i ++) {
-    
-    createPatient()
-}
+
 
 
 function heartbeat(heartID){
@@ -74,13 +70,15 @@ function heartbeat(heartID){
     let h = $(selector)
     h.show()
     setTimeout(()=>{h.hide()}, 50)
-    
-
-
-    
 }
 function OnConnect(){
     console.log("CONNECTED SUCESSFULLY")
+}
+
+let patientNum = 3
+for (let i=0; i < patientNum; i ++) {
+    
+    createPatient()
 }
 // MQTT actions
 var mLocation = {
