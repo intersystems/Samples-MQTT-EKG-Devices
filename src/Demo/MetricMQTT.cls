@@ -1,14 +1,13 @@
-
 /// Business metric class. For documentation on the business metric parent class
 /// see https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=EGDV_bmetric
 Class Demo.MetricMQTT Extends Ens.BusinessMetric
 {
 
 // property that stores the current value for every instance of this business
+
 // metric.
+
 Property BPM As Ens.DataType.Metric;
-
-
 
 /// Dynamically runs query and breaks
 /// metric data down by instance, in this case
@@ -17,7 +16,6 @@ Query MetricInstances() As %SQLQuery
 {
   select distinct patientID from Demo.HeartRate
 }
-
 
 /// This method runs periodically on an interval set using the 'Call Interval'
 /// setting in the management portal.
@@ -38,6 +36,5 @@ Method OnCalculateMetrics() As %Status
 
     return $$$OK
 }
-
 
 }
