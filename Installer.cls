@@ -30,6 +30,7 @@ ClassMethod setup(ByRef pVars, pLogLevel As %Integer = 3, pInstaller As %Install
   Quit ##class(%Installer.Manifest).%Generate(%compiledclass, %code, "MyInstall")
 }
 
+
 ClassMethod Initialize() As %Status
 {
   //
@@ -98,4 +99,3 @@ ClassMethod InitializeDocker() As %Status
   return $$$OK
 }
 
-}
