@@ -1,4 +1,4 @@
 # Monitoring Remote Patient EKG Readings with MQTT 
 
-Instructions for the *WILL UPDATE WHEN URL IS CREATED* exercise are available on [GettingStartedHealth.InterSystems.com](https://gettingstartedhealth.intersystems.com/).
+Instructions for this exercise are available on [GettingStartedHealth.InterSystems.com](https://gettingstartedhealth.intersystems.com/).
 
