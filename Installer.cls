@@ -59,7 +59,7 @@ ClassMethod InitializeLearningLab() As %Status
   $$$ThrowOnError(st)
  
   // configure namespace
-  set app = $System.CSP.GetDefaultApp(namespace) _ "/"
+  set app = $System.CSP.GetDefaultApp($namespace) _ "/"
   do EnableDeepSee^%SYS.cspServer(app)
  
   // configure EKG app
