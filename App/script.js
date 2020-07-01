@@ -1,9 +1,9 @@
 
 
-// The below script requires a declaration of a variable TopicString in a config.js file. 
+// The below script requires a declaration of a variable SubscriptionString in a config.js file. 
 // Config.js is automatically created during the installation of this exercise.
 
-$("#topicIDString").text(TopicString) 
+$("#SubscriptionString").text(SubscriptionString) 
 
 // Store array of patients added to project.
 var patientArray = [
