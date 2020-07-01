@@ -3,9 +3,7 @@
 // The below script requires a declaration of a variable TopicString in a config.js file. 
 // Config.js is automatically created during the installation of this exercise.
 
-let subTopic = TopicString
-let masterTopic = TopicString
-$("#topicIDString").text(subTopic) 
+$("#topicIDString").text(TopicString) 
 
 // Store array of patients added to project.
 var patientArray = [

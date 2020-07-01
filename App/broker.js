@@ -44,7 +44,7 @@ function sendEkgReadings(){
 
     patientArray.forEach((patient)=>{
         // Publish to master topic, replacing # with the the patient id.
-        let topic = masterTopic.replace("#",  patient.name)
+        let topic = TopicString.replace("#",  patient.name)
 
         // Publish BPM as string in message field.
         let message = new Paho.MQTT.Message(patient.BPM.toString())
