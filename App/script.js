@@ -1,18 +1,9 @@
 
-// debug function to toggle console logging based on DEBUG variable.
 
-var DEBUG = false
-function debug(...input) {
-    if (DEBUG) {
-        console.log(input)
-    }
-}
-// The below script requires a declaration of a variable in a config.js file. Do not attempt to run 
-// this script before initializing this variable.
+// The below script requires a declaration of a variable SubscriptionString in a config.js file. 
+// Config.js is automatically created during the installation of this exercise.
 
-let subTopic = TopicString
-let masterTopic = TopicString
-$("#topicIDString").text(subTopic) 
+$("#SubscriptionString").text(SubscriptionString) 
 
 // Store array of patients added to project.
 var patientArray = [
@@ -39,7 +30,7 @@ function createPatient() {
     patientArray.push(patient)
 
     // Create patient card object
-    let card = $("<div style='margin:20px; width: 500px; border-style: solid'>")
+    let card = $("<div style='margin:20px; width: 500px; height: 200px; padding:5px; border-style: solid'>")
 
     // Create and add title section for card
     let title = $("<h3>")
@@ -67,11 +58,13 @@ function createPatient() {
     heart.hide()
  
     // BPM value field below slider. Updates with slider.
+    let bpmDiv = $('<div>')
     let bpmOutput = $(`<p>${bpm}</p>`)
-    bpmOutput.append(heart)
+    bpmDiv.append(bpmOutput)
+    bpmDiv.append(heart)
     card.append("<br>")
     card.append('<h4>Beats per Minute (BPM)</h4>')
-    card.append(bpmOutput)
+    card.append(bpmDiv)
     
 
 
@@ -96,7 +89,7 @@ function createPatient() {
         bpmOutput.text(patient.BPM)
 
         // Re-add heart icon after updating text
-        bpmOutput.append(heart)
+        bpmDiv.append(heart)
         // Calculate beats per second (bps)
         let bps = parseInt(patient.BPM)/60
         
@@ -123,7 +116,6 @@ function heartbeat(heartID){
     let selector = "#" + heartID
     let heart = $(selector)
     
-    debug(heart)
     // toggle to show heart
     heart.show()
 
@@ -141,72 +133,8 @@ function CreatePatients(patientNum) {
 
 CreatePatients(3)
 
-// ******************************************************************************************************************************
-// ************************************ PAHO MQTT Client Code Below *************************************************************
-// ******************************************************************************************************************************
 
 
 
 
-
-
-// MQTT  connection details
-var mLocation = {
-    hostname: "mqtt.eclipse.org/mqtt",
-    port: "80",
-    path: "/"
-}
-
-// Create a client instance
-client = new Paho.MQTT.Client(mLocation.hostname, Number(mLocation.port), mLocation.path, "ISCLearner")
-
-// Callback function called when Paho connects successfully.
-client.onConnected = function() {
-    console.log("CONNECTED SUCCESSFULLY")
-}
-
-// Callback function when connection is lost.
-client.onConnectionLost = function (responseObject) {
-    console.log("CONNECTION LOST - " + responseObject.errorMessage);
-}
-
-// Sett connection options
-var options = {
-    timeout: 3,
-    useSSL: true,
-    keepAliveInterval: 30,
-    onSuccess: function () {
-        ("CONNECTION SUCCESS")
-        
-    },
-    onFailure: function (message) {
-        console.log("CONNECTION FAILURE - " + message.errorMessage)
-    }
-};
-
-// connect the client
-client.connect(options);
-
-
-
-
-// Sends MQTT message for each patient in current DOM context.
-function sendEkgReadings(){
-
-    patientArray.forEach((patient)=>{
-        // Publish to master topic, replacing # with the the patient id.
-        let topic = masterTopic.replace("#",  patient.name)
-
-        // Publish BPM as string in message field.
-        let message = new Paho.MQTT.Message(patient.BPM.toString())
-        message.destinationName = topic
-        
-        // Send message.
-        client.send(message)
-
-    })
-}
-
-// call sendEkgReadings once per second.
-setInterval(sendEkgReadings, 1000)
 

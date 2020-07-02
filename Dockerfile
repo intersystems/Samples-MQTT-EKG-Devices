@@ -12,7 +12,6 @@ COPY irissession.sh /
 RUN chmod +x /irissession.sh 
 
 USER irisowner
-COPY ./Setup.cls ./
 COPY ./src ./src/
 COPY ./Installer.cls ./
 SHELL ["/irissession.sh"]

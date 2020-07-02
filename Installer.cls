@@ -66,16 +66,16 @@ ClassMethod InitializeLearningLab() As %Status
   // Configure EKG app.
   set StudentID = ##class(%SYSTEM.Util).GetEnviron("AVL_STUDENT_ID")
   set StudentID = $Piece(StudentID, "@", 1)
-  set TopicString = "/" _ StudentID _ "/acmeHospital/EKG/#"
-  set pSettings("From_EKG_MQTT","Adapter", "Topic")= TopicString
+  set SubscriptionString = "/" _ StudentID _ "/acmeHospital/EKG/#"
+  set pSettings("From_EKG_MQTT","Adapter", "Topic")= SubscriptionString
   set st = ##class(Solution.MQTT).ApplySettings("Solution.MQTT", .pSettings)
   Set file = ##class(%File).%New("/home/project/shared/Samples-MQTT-EKG-Devices/App/config.js")
   Do file.Open("WSN")
-  Do file.WriteLine("let TopicString = "_""""_TopicString_"""")
+  Do file.WriteLine("let SubscriptionString = "_""""_SubscriptionString_"""")
  
   // Output topic string for MQTT messages.
   write "You have successfully initiated the MQTT exercise", !
-  write "Please take note of your topic top-level string: " _ TopicString,!
+  write "Please take note of your topic top-level string: " _ SubscriptionString,!
   Read "press enter to continue",output, !, !
 
   return $$$OK
@@ -86,16 +86,16 @@ ClassMethod InitializeDocker() As %Status
   // Switch to INTEROP namespace and configure EKG app.
   set $namespace = "INTEROP"
   set StudentID = "Student_" _ $Random(10000)
-  set TopicString = "/" _ StudentID _ "/acmeHospital/EKG/#"
-  set pSettings("From_EKG_MQTT", "Adapter", "Topic") = TopicString
+  set SubscriptionString = "/" _ StudentID _ "/acmeHospital/EKG/#"
+  set pSettings("From_EKG_MQTT", "Adapter", "Topic") = SubscriptionString
   set st = ##class(Solution.MQTT).ApplySettings("Solution.MQTT", .pSettings)
   set file = ##class(%File).%New("/datavol/App/config.js")
   do file.Open("WSN")
-  do file.WriteLine("let TopicString = "_""""_ TopicString _"""")
+  do file.WriteLine("let SubscriptionString = "_""""_ SubscriptionString _"""")
  
   // Output topic string for MQTT messages.
   write "You have successfully initiated the MQTT exercise", !
-  write "Please take note of your topic top-level string: " _ TopicString,!
+  write "Please take note of your topic top-level string: " _ SubscriptionString,!
   Read "press enter to continue",output, !, !
 
   return $$$OK
