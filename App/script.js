@@ -30,7 +30,7 @@ function createPatient() {
     patientArray.push(patient)
 
     // Create patient card object
-    let card = $("<div style='margin:20px; width: 500px; border-style: solid'>")
+    let card = $("<div style='margin:20px; width: 500p; height: 200px; border-style: solid'>")
 
     // Create and add title section for card
     let title = $("<h3>")
@@ -58,11 +58,13 @@ function createPatient() {
     heart.hide()
  
     // BPM value field below slider. Updates with slider.
+    let bpmDiv = $('<div>')
     let bpmOutput = $(`<p>${bpm}</p>`)
-    bpmOutput.append(heart)
+    bpmDiv.append(bpmOutput)
+    bpmDiv.append(heart)
     card.append("<br>")
     card.append('<h4>Beats per Minute (BPM)</h4>')
-    card.append(bpmOutput)
+    card.append(bpmDiv)
     
 
 
@@ -87,7 +89,7 @@ function createPatient() {
         bpmOutput.text(patient.BPM)
 
         // Re-add heart icon after updating text
-        bpmOutput.append(heart)
+        bpmDiv.append(heart)
         // Calculate beats per second (bps)
         let bps = parseInt(patient.BPM)/60
         
