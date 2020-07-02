@@ -30,7 +30,7 @@ function createPatient() {
     patientArray.push(patient)
 
     // Create patient card object
-    let card = $("<div style='margin:20px; width: 500p; height: 200px; border-style: solid'>")
+    let card = $("<div style='margin:20px; width: 500px; height: 200px; padding:5px; border-style: solid'>")
 
     // Create and add title section for card
     let title = $("<h3>")
