@@ -1,7 +1,7 @@
 
 // MQTT  connection details
 var mLocation = {
-    hostname: "mqtt.eclipse.org/mqtt",
+    hostname: "mqtt.eclipseprojects.io/mqtt",
     port: "80",
     path: "/"
 }
@@ -19,7 +19,7 @@ client.onConnectionLost = function (responseObject) {
     console.log("CONNECTION LOST - " + responseObject.errorMessage);
 }
 
-// Sett connection options
+// Set connection options
 var options = {
     timeout: 3,
     useSSL: true,
