@@ -1,27 +1,22 @@
-FROM store/intersystems/irishealth-community:2020.1.0.215.0
+ARG IMAGE=store/intersystems/irishealth-community:2020.1.0.215.0
+FROM $IMAGE
 
 USER root
 
-RUN mkdir /opt/app && chown irisowner:irisowner /opt/app
+RUN mkdir /opt/irisbuild && chown irisowner:irisowner /opt/irisbuild
+
+WORKDIR /opt/irisbuild
 
 
 
-WORKDIR /opt/app
-
-COPY irissession.sh /
-RUN chmod +x /irissession.sh 
 
 USER irisowner
 COPY ./src ./src/
 COPY ./Installer.cls ./
-SHELL ["/irissession.sh"]
+COPY iris.script iris.script
 
 
+RUN iris start IRIS \
+	&& iris session IRIS < iris.script \
+    && iris stop IRIS quietly
 
-RUN \
-    do $system.OBJ.Load("/opt/app/Installer.cls", "ck") \
-    set sc = ##class(App.Installer).Initialize() 
-# bringing the standard shell back
-SHELL ["/bin/bash", "-c"]
-
-CMD [ "-l", "/usr/irissys/mgr/messages.log" ]

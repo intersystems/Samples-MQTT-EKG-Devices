@@ -6,7 +6,7 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
 <Manifest>
   <Default Name="NAMESPACE" Value="INTEROP"/>
   <Default Name="DBNAME" Value="INTEROP"/>
-  <Default Name="APPPATH" Dir="/opt/app/" />
+  <Default Name="APPPATH" Dir="/opt/irisbuild" />
   <Default Name="SOURCESPATH" Dir="${APPPATH}src" />
   <Default Name="RESOURCE" Value="%DB_${DBNAME}" /> 
 
@@ -38,7 +38,7 @@ ClassMethod Initialize() As %Status
  
   // Switch to INTEROP namespace and load objectscript files in the src directory.
   set $namespace = "INTEROP"
-  set st = $System.OBJ.LoadDir("/opt/app/src/", "ck", ,1)
+  set st = $System.OBJ.LoadDir("/opt/irisbuild/src/", "ck", ,1)
   $$$ThrowOnError(st)
  
   // Enable analytics for the INTEROP namespace.

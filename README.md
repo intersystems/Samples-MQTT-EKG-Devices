@@ -29,6 +29,7 @@ Docker
 2.	Change the directory: `cd Samples-MQTT-EKG-Devices`
 3.	In the command line, type `docker-compose up -d`
 4.	Once complete, type `docker-compose exec iris iris session iris -U %SYS "##class(App.Installer).InitializeDocker()"`
+    * NOTE: If you have already allocated port 52773, choose an available port and update the docker-compose.yml file as well as the management portal link. 
 5.	Store the topic string outputted from this process for later use.
 6.	Throughout the exercise, use the following connection settings:
 •	Username: SuperUser
