@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
     iris:
         build: 
@@ -6,7 +6,18 @@ services:
           dockerfile: Dockerfile
         ports:
           - 52773:52773         
+        environment:
+        - TZ=JST-9
         volumes:
-          - "./:/datavol"
+          - "./datavol:/datavol"
 
-
+    apache:
+      image: httpd:2.4
+      init: true
+      hostname: apache
+      ports:
+        - 80:80        
+      environment:
+      - TZ=JST-9
+      volumes:
+      - ./datavol/App:/usr/local/apache2/htdocs/ 

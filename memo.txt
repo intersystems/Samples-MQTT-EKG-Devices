@@ -1,0 +1,24 @@
+Windows10 + VM(Ubuntu20.04)で動かす方法
+
+$ docker-compose up -d
+起動待ち
+$ docker-compose exec iris iris session iris -U %SYS "##class(App.Installer).InitializeDocker()"
+You have successfully initiated the MQTT exercise
+Please take note of your topic top-level string: /Student_3987/acmeHospital/EKG/#
+press enter to continue
+$
+
+UIを起動してアイテムを追加、値を変更を実施。
+http://irishost/app.html
+
+User Portalで監視。
+
+補足
+mosquitto clientで監視。
+mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG -m "abc"
+mosquitto_sub -v -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG/#
+
+vscodeではMQTT.code-workspaceを使用して、ワークスペースとして開くとコンテナ内のirisに疎通する。
+
+
+
