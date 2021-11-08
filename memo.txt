@@ -1,5 +1,8 @@
+vscodeではフォルダではなく、MQTT.code-workspaceを使用してワークスペースとして開くとコンテナ内のirisに疎通する。
+
 Windows10 + VM(Ubuntu20.04)で動かす方法
 
+$ ./setup.sh
 $ docker-compose up -d
 起動待ち
 $ docker-compose exec iris iris session iris -U %SYS "##class(App.Installer).InitializeDocker()"
@@ -14,11 +17,23 @@ http://irishost/app.html
 User Portalで監視。
 
 補足
-mosquitto clientで監視。
+MQTTクライアント機能を直接使用する方法
+$ docker-compose exec iris iris session iris
+USER>set tSC=##class(%Net.MQTT.Client).%New("tcp://mqtt.eclipseprojects.io:1883")
+USER>set tSC=m.Connect()
+USER>set tSC=m.Subscribe("/Student_6832/acmeHospital/EKG/#")
+USER>set tSC=m.Receive(.topic,.message)
+USER>wriste
+m=<OBJECT REFERENCE>[1@%Net.MQTT.Client]
+message=184
+topic="/Student_6832/acmeHospital/EKG/Patient-0"
+USER>h
+$
+
+mosquitto clientで監視する方法。
 mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG -m "abc"
 mosquitto_sub -v -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG/#
 
-vscodeではMQTT.code-workspaceを使用して、ワークスペースとして開くとコンテナ内のirisに疎通する。
 
 
 

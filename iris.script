@@ -2,3 +2,4 @@ zn "%SYS"
 do ##class(Security.Users).UnExpireUserPasswords("*")
 do $system.OBJ.Load("/opt/irisbuild/Installer.cls", "ck") 
 set sc = ##class(App.Installer).Initialize() 
+halt
