@@ -35,5 +35,12 @@ mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital
 mosquitto_sub -v -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG/#
 
 
+PEXを使わずに.NETを呼び出す方法
+USER>w $SYSTEM.external.getRemoteGateway("netgw",55556).new("System.DateTime",0).Now
+2021-11-19 03:51:03.4967784
 
-
+USER>Set gw=$SYSTEM.external.getRemoteGateway("netgw",55556)
+USER>do gw.addToPath("/app/MyLibrary.dll")
+USER>set proxy = gw.new("dc.MyLibrary")
+USER>w proxy.DoSomething()
+123

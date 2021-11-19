@@ -32,3 +32,14 @@ services:
     - TZ=JST-9
     volumes:
     - ./datavol/share:/root/share 
+
+  netgw:
+    image: intersystemsdc/pexservice:latest
+    build:
+      context: dotnet
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - 55556:55556
+    environment:
+      - TZ=JST-9    

@@ -88,6 +88,7 @@ ClassMethod InitializeDocker() As %Status
   set StudentID = "Student_" _ $Random(10000)
   set SubscriptionString = "/" _ StudentID _ "/acmeHospital/EKG/#"
   set pSettings("From_EKG_MQTT", "Adapter", "Topic") = SubscriptionString
+  set pSettings("From_EKG_MQTT_CC", "Adapter", "Topic") = SubscriptionString
   set st = ##class(Solution.MQTT).ApplySettings("Solution.MQTT", .pSettings)
   set file = ##class(%File).%New("/datavol/App/config.js")
   do file.Open("WSN")
