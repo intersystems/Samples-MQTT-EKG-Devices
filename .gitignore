@@ -2,3 +2,5 @@
 config.js
 .gitignore
 datavol/share/*.data
+*.o
+*.so
