@@ -42,5 +42,5 @@ USER>w $SYSTEM.external.getRemoteGateway("netgw",55556).new("System.DateTime",0)
 USER>Set gw=$SYSTEM.external.getRemoteGateway("netgw",55556)
 USER>do gw.addToPath("/app/MyLibrary.dll")
 USER>set proxy = gw.new("dc.MyLibrary")
-USER>w proxy.DoSomething()
+USER>w proxy.GetNumber()
 123

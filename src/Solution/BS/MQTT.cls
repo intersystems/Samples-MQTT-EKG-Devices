@@ -18,7 +18,7 @@ Method OnProcessInput(pInput As EnsLib.MQTT.Message, pOutput As %RegisteredObjec
 		#; Do something in .NET
 		$$$LOGINFO(..gw.new("System.DateTime",0).Now)
 		set proxy = ..gw.new("dc.MyLibrary")
-		$$$LOGINFO(proxy.DoSomething())
+		Set pInput=proxy.DoSomething()
 
 		Set tSC=##super(pInput,pOutput)
 	} Catch e {
