@@ -1,6 +1,7 @@
 version: '3.7'
 services:
   iris:
+      hostname: iris
       build: 
         context: .
         dockerfile: Dockerfile
@@ -11,6 +12,7 @@ services:
       volumes:
         - "./datavol:/datavol"
         - "./c-src:/home/irisowner/src"
+        - ./datavol/share:/home/irisowner/share 
 
   apache:
     image: httpd:2.4

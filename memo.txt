@@ -31,8 +31,13 @@ USER>h
 $
 
 mosquitto clientで監視する方法。
-mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG -m "abc"
-mosquitto_sub -v -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG/#
+$ docker-compose exec iris bash
+# mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG -m "abc"
+# mosquitto_sub -v -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_3987/acmeHospital/EKG/#
+
+バイナリファイルを送る
+# mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_6084/acmeHospital/EKG -f /home/irisowner/share/data1.data
+
 
 
 PEXを使わずに.NETを呼び出す方法
