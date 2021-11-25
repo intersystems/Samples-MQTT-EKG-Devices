@@ -35,7 +35,7 @@ namespace dc
             //String sqlStatement = "INSERT INTO RAWDATA (uuid,p1,p2,p3) VALUES (1,2,3)";
             // Cannot convert from 'InterSystems.Data.IRISClient.ADO.IRIS' to 'InterSystems.Data.IRISClient.IRISADOConnection' [/source/MyLibrary.csproj]
             //IRISCommand cmd1 = new IRISCommand(sqlStatement, iris);
-            String host = "localhost";
+            String host = "iris";
             String port = "1972";
             String username = "SuperUser";
             String password = "SYS";
@@ -47,7 +47,7 @@ namespace dc
 
             //ERROR #8104: Gateway Exception: <GATEWAY> InterSystems.Data.IRISClient.IRISException (0x80004005) System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType) [IRIS Provider] Communication link failure: System.Net.Sockets.SocketException; Address family not supported by protocol ---> System.Net.Sockets.SocketException (97): Address family not supported by protocol
             IRISConnect.Open();
-            String sqlStatement = "INSERT INTO RAWDATA (seq,p1,p2,p3) VALUES (1000,1001,1002,1003)";
+            String sqlStatement = "INSERT INTO Solution.RAWDATA (seq,p1,p2,p3) VALUES (1000,1001,1002,1003)";
             IRISCommand cmd = new IRISCommand(sqlStatement, IRISConnect);
             cmd.ExecuteNonQuery();
 
