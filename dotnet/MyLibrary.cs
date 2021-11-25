@@ -8,11 +8,11 @@ namespace dc
     {
         public string s1="abc";
 
-        public IRISObject DoSomething()
+        public IRISObject DoSomething(String topic, String value)
         {
             // Get connection from existing gateway connection
             IRIS iris = GatewayContext.GetIRIS();
-            String messageText="abcdefg";
+            String messageText="topic:"+topic+" value:"+value;
 
             //Create an IRIS object for later use.
             IRISObject request = (IRISObject)iris.ClassMethodObject("Ens.StringContainer", "%New", messageText);

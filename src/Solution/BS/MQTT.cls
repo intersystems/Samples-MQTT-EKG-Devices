@@ -14,13 +14,14 @@ Method OnProcessInput(pInput As EnsLib.MQTT.Message, pOutput As %RegisteredObjec
 	#dim e As %Exception.AbstractException
 	
 	Try {
-	
+
+		$$$LOGINFO("Topic:"_pInput.Topic_" Value:"_pInput.StringValue)
 		#; Do something in .NET
 		$$$LOGINFO(..gw.new("System.DateTime",0).Now)
 		set proxy = ..gw.new("dc.MyLibrary")
-		Set pInput=proxy.DoSomething()
+		Set newpInput=proxy.DoSomething(pInput.Topic, pInput.StringValue)
 
-		Set tSC=##super(pInput,pOutput)
+		Set tSC=##super(newpInput,pOutput)
 	} Catch e {
 		Set tSC=e.AsStatus()
 	}
