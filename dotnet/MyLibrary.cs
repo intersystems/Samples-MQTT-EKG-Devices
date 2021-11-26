@@ -1,65 +1,152 @@
 ﻿using System;
-using InterSystems.Data.IRISClient.ADO;
-using InterSystems.Data.IRISClient.Gateway;
 
+using InterSystems.Data.IRISClient.Gateway;
+//for gateway and NAtive API
+using InterSystems.Data.IRISClient.ADO;
+//for ADO.NET
 using InterSystems.Data.IRISClient;
 
 namespace dc
 {
     public class MyLibrary
     {
-        public string s1="abc";
-
-        public IRISObject DoSomething(String mqtttopic, String mqttmsg)
+	    public IRISObject DoSomethingNative(String mqtttopic, String mqttmsg)
         {
-            // Get connection from existing gateway connection
-            IRIS iris = GatewayContext.GetIRIS();
-            String messageText="topic:"+mqtttopic+" value:"+mqttmsg;
+            long seqno;
+
 
             // Decode mqttmsg (raw data) into rows. It depends on how they are encoded.
             //
             // ++Write your code here++
-            int rowcount=4;
-            int[,] raw = new int[4,3] { { 1, 10,100 }, { 2, 20, 200 }, { 3, 30, 300 }, { 4, 40, 400 } };
+            int rowcount = 2000;
+            int columncount = 4;
+
+            int[] array = new int[rowcount];
+            for (int i = 0; i < rowcount; i++)
+            {
+                array[i] = i;
+            }
             // --Write your code here--
 
-            // Save decoded values into IRIS via Native API
-            long seqno=(long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
-            for (int i=0; i<rowcount; i++) {
-                iris.ClassMethodStatusCode("Solution.RAWDATA", "INSERT", seqno, raw[i,0],raw[i,1],raw[i,2]);
+
+            // Get connection
+            IRIS iris = null;
+            try
+            {
+                iris = GatewayContext.GetIRIS();
+            }
+            catch (Exception e)
+            {
+                // consider we are not in External gateway server context
+                String host = "localhost";
+                String port = "1972";
+                String username = "SuperUser";
+                String password = "SYS";
+                String Namespace = "INTEROP";
+                IRISConnection connection = new IRISConnection();
+                connection.ConnectionString = "Server = " + host + "; Port = " + port + "; Namespace = " + Namespace + "; Password = " + password + "; User ID = " + username;
+                connection.Open();
+
+                iris = IRIS.CreateIRIS(connection);
             }
 
-            // Save decoded values into IRIS via ADO.NET
-            // ADO.NET connection is not compatible with IRIS iris connection.
-            // If you want to do this, you will have to open new connection for this.
-            //String sqlStatement = "INSERT INTO RAWDATA (uuid,p1,p2,p3) VALUES (1,2,3)";
-            // Cannot convert from 'InterSystems.Data.IRISClient.ADO.IRIS' to 'InterSystems.Data.IRISClient.IRISADOConnection' [/source/MyLibrary.csproj]
-            //IRISCommand cmd1 = new IRISCommand(sqlStatement, iris);
-            String host = "iris";
-            String port = "1972";
-            String username = "SuperUser";
-            String password = "SYS";
-            String Namespace = "INTEROP";
-            IRISConnection IRISConnect = new IRISConnection();
-            IRISConnect.ConnectionString = "Server = " + host 
-                + "; Port = " + port + "; Namespace = " + Namespace 
-                + "; Password = " + password + "; User ID = " + username;
-
-            //ERROR #8104: Gateway Exception: <GATEWAY> InterSystems.Data.IRISClient.IRISException (0x80004005) System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType) [IRIS Provider] Communication link failure: System.Net.Sockets.SocketException; Address family not supported by protocol ---> System.Net.Sockets.SocketException (97): Address family not supported by protocol
-            IRISConnect.Open();
-            String sqlStatement = "INSERT INTO Solution.RAWDATA (seq,p1,p2,p3) VALUES (1000,1001,1002,1003)";
-            IRISCommand cmd = new IRISCommand(sqlStatement, IRISConnect);
-            cmd.ExecuteNonQuery();
-
+            // Native API
+            // Save decoded values into IRIS via Native API
+            seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
+            for (int i = 0; i < rowcount; i += columncount)
+            {
+                iris.ClassMethodStatusCode("Solution.RAWDATA", "INSERT", seqno, array[i], array[i+1], array[i+2], array[i + 3]);
+            }
 
             // Return a message.
             IRISObject request = (IRISObject)iris.ClassMethodObject("Ens.StringContainer", "%New", seqno);
             return request;
         }
-        public int GetNumber()
+
+        public IRISObject DoSomethingSQL(String mqtttopic, String mqttmsg)
         {
-            return 123;
+            long seqno;
+
+            // Decode mqttmsg (raw data) into rows. It depends on how they are encoded.
+            //
+            // ++Write your code here++
+            int rowcount = 2000;
+            int columncount = 4;
+
+            int[] array = new int[rowcount];
+            for (int i = 0; i < rowcount; i++)
+            {
+                array[i] = i;
+            }
+            // --Write your code here--
+
+
+            // Get connection
+            // SQL always need its own connection 
+            String host = "localhost";
+            String port = "1972";
+            String username = "SuperUser";
+            String password = "SYS";
+            String Namespace = "INTEROP";
+            IRISConnection connection = new IRISConnection();
+            connection.ConnectionString = "Server = " + host + "; Port = " + port + "; Namespace = " + Namespace + "; Password = " + password + "; User ID = " + username;
+            connection.Open();
+
+            IRIS iris = null;
+            try
+            {
+                iris = GatewayContext.GetIRIS();
+            }
+            catch (Exception e)
+            {
+                // consider we are not in External gateway server context
+                iris = IRIS.CreateIRIS(connection);
+            }
+
+
+            seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
+
+            // ADO.NET (relational)
+            String sqlStatement = "INSERT INTO Solution.RAWDATA (seq,p1,p2,p3,p4) VALUES (@seq,@p1,@p2,@p3,@p4)";
+            IRISCommand cmd = new IRISCommand(sqlStatement, connection);
+
+            seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
+
+            // split array into columns
+            for (int i = 0; i < rowcount; i += columncount)
+            {
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@seq", seqno);
+                cmd.Parameters.AddWithValue("@p1", array[i]);
+                cmd.Parameters.AddWithValue("@p2", array[i + 1]);
+                cmd.Parameters.AddWithValue("@p3", array[i + 2]);
+                cmd.Parameters.AddWithValue("@p4", array[i + 3]);
+                cmd.ExecuteNonQuery();
+            }
+
+            // Return a message.
+            IRISObject request = (IRISObject)iris.ClassMethodObject("Ens.StringContainer", "%New", seqno);
+            return request;
         }
+
+	    public String TestArray()
+        {
+            int rowcount = 2000;
+            int columncount = 4;
+
+            int[] array = new int[rowcount];
+            for (int i = 0; i < rowcount; i++)
+            {
+                array[i] = i;
+            }
+
+            // Get connection
+            IRIS iris = null;
+            iris = GatewayContext.GetIRIS();
+
+            return String.Join(",",array);
+        }
+
 
     }
 }

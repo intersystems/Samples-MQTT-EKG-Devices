@@ -18,7 +18,8 @@ Method OnProcessInput(pInput As EnsLib.MQTT.Message, pOutput As %RegisteredObjec
 		#; Do something in .NET
 		$$$LOGINFO(..gw.new("System.DateTime",0).Now)
 		set proxy = ..gw.new("dc.MyLibrary")
-		Set newpInput=proxy.DoSomething(pInput.Topic, pInput.StringValue)
+		Set newpInput=proxy.DoSomethingNative(pInput.Topic, pInput.StringValue)
+		$$$LOGINFO("newpInput:"_newpInput)
 
 		Set tSC=##super(newpInput,pOutput)
 	} Catch e {
@@ -26,6 +27,14 @@ Method OnProcessInput(pInput As EnsLib.MQTT.Message, pOutput As %RegisteredObjec
 	}
 		
 	Quit tSC
+}
+
+Method Test()
+{
+	// Return String.Joined array of primitive types 
+	// This would return comma separated values such as 0,1,2,3,4,5,6,7,8,9...
+	Set joinedarray=proxy.TestArray()
+	$$$LOGINFO("Array:"_joinedarray)
 }
 
 Method OnInit() As %Status
