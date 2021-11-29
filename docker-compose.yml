@@ -14,16 +14,16 @@ services:
         - "./c-src:/home/irisowner/src"
         - ./datavol/share:/home/irisowner/share 
 
-  apache:
-    image: httpd:2.4
-    init: true
-    hostname: apache
-    ports:
-      - 80:80        
-    environment:
-    - TZ=JST-9
-    volumes:
-    - ./datavol/App:/usr/local/apache2/htdocs/ 
+#  apache:
+#    image: httpd:2.4
+#    init: true
+#    hostname: apache
+#    ports:
+#      - 80:80        
+#    environment:
+#    - TZ=JST-9
+#    volumes:
+#    - ./datavol/App:/usr/local/apache2/htdocs/ 
 
   python:
     restart: always
@@ -46,3 +46,13 @@ services:
       - 55556:55556
     environment:
       - TZ=JST-9    
+
+  mqttbroker:
+    image: eclipse-mosquitto
+    hostname: mqttbroker
+    restart: on-failure
+    ports:
+    - 1883:1883
+    - 9001:9001
+    volumes:
+    - ./MQTTBroker/conf:/mosquitto/config

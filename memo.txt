@@ -11,15 +11,25 @@ Please take note of your topic top-level string: /Student_3987/acmeHospital/EKG/
 press enter to continue
 $
 
+mqtt.eclipseprojects.ioをmqttbrokerに変更。これにより、下記Webアプリは動作しなくなった。(websocket使用のため)
 UIを起動してアイテムを追加、値を変更を実施。
 http://irishost/app.html
 
-User Portalで監視。
+代わりに、下記のコマンドラインを実行すること。
+mosquitto clientで監視する方法。
+$ docker-compose exec iris bash
+# mosquitto_pub -h "mqttbroker" -p 1883 -t /Student_6084/acmeHospital/EKG -m "90"
+# mosquitto_sub -v -h "mqttbroker" -p 1883 -t /Student_6084/acmeHospital/EKG/#
+
+バイナリファイルを送る
+# mosquitto_pub -h "mqttbroker" -p 1883 -t /Student_6084/acmeHospital/EKG -f /home/irisowner/share/data1.data
+
+
 
 補足
 MQTTクライアント機能を直接使用する方法
 $ docker-compose exec iris iris session iris
-USER>set tSC=##class(%Net.MQTT.Client).%New("tcp://mqtt.eclipseprojects.io:1883")
+USER>set tSC=##class(%Net.MQTT.Client).%New("tcp://mqttbroker:1883")
 USER>set tSC=m.Connect()
 USER>set tSC=m.Subscribe("/Student_6832/acmeHospital/EKG/#")
 USER>set tSC=m.Receive(.topic,.message)
@@ -29,15 +39,6 @@ message=184
 topic="/Student_6832/acmeHospital/EKG/Patient-0"
 USER>h
 $
-
-mosquitto clientで監視する方法。
-$ docker-compose exec iris bash
-# mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_6084/acmeHospital/EKG -m "90"
-# mosquitto_sub -v -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_6084/acmeHospital/EKG/#
-
-バイナリファイルを送る
-# mosquitto_pub -h "mqtt.eclipseprojects.io" -p 1883 -t /Student_6084/acmeHospital/EKG -f /home/irisowner/share/data1.data
-
 
 
 PEXを使わずに.NETを呼び出す方法

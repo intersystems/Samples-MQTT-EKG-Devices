@@ -9,6 +9,7 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
   <Default Name="APPPATH" Dir="/opt/irisbuild" />
   <Default Name="SOURCESPATH" Dir="${APPPATH}src" />
   <Default Name="RESOURCE" Value="%DB_${DBNAME}" /> 
+  <Default Name="ProductionName" Value="Solution.MQTT"/>
 
   <Namespace Name="${NAMESPACE}" Code="${DBNAME}-CODE" Data="${DBNAME}-DATA" Create="yes" Ensemble="1">
     <Configuration>
@@ -17,11 +18,8 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
     </Configuration>
 
     <Import File="${SOURCESPATH}" Recurse="1"/>
-    
-      
-    
+    <Production Name="${ProductionName}" AutoStart="1"/>  
   </Namespace>
-
 </Manifest>
 }
 
