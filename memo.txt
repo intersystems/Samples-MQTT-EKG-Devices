@@ -11,7 +11,12 @@ Please take note of your topic top-level string: /Student_3987/acmeHospital/EKG/
 press enter to continue
 $
 
-mqtt.eclipseprojects.ioをmqttbrokerに変更。これにより、下記Webアプリは動作しなくなった。(websocket使用のため)
+
+注意)
+ブローカをネット上のものから、自前(コンテナ)に変更
+mqtt.eclipseprojects.ioをmqttbrokerに変更。これにより、下記Webアプリは動作しなくなった。
+Webアプリはwebsocket使用しているが、配布バイナリはWEBSOCKETSがDISABLEされているため。
+
 UIを起動してアイテムを追加、値を変更を実施。
 http://irishost/app.html
 
@@ -50,3 +55,18 @@ USER>do gw.addToPath("/app/MyLibrary.dll")
 USER>set proxy = gw.new("dc.MyLibrary")
 USER>w proxy.GetNumber()
 123
+
+hint
+https://github.com/intersystems/Samples-PEX-Course
+
+
+自前でビルドするには
+https://github.com/eclipse/mosquitto
+>libwebsockets (libwebsockets-dev) - enable with make WITH_WEBSOCKETS=yes
+
+sudo apt-get install build-essential libwebsockets-dev
+make WITH_WEBSOCKETS=yes WITH_DOCS=no WITH_TLS=no WITH_CJSON=no
+sudo make WITH_WEBSOCKETS=yes WITH_DOCS=no WITH_TLS=no WITH_CJSON=no install
+ls /usr/local/sbin/ -l
+total 2072
+-rwxr-xr-x 1 root root 2120800 Nov 29 13:47 mosquitto
