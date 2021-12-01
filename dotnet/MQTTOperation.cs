@@ -22,6 +22,9 @@ namespace dc
             String value = req.GetString("StringValue");
             LOGINFO("Received StringValue: " + value);
 
+            String topic = req.GetString("Topic");
+            LOGINFO("Received topic: " + topic);
+            
             // Decode value (raw data) into rows. It depends on how they are encoded.
             //
             // ++Write your code here++
