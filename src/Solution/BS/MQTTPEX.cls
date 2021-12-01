@@ -12,8 +12,16 @@ ClassMethod OnGetConnections(Output pArray As %String, pItem As Ens.Config.Item)
 	For i=1:1:count {
 		If (pItem.Settings.GetAt(i).Name="%remoteSettings") {
 			Set value=pItem.Settings.GetAt(i).Value
-			Set target=$P(value,"=",2)
-			If target'="" { Set pArray(target)="" }
+			// borrowing some code from EnsLib.PEX.Common
+			set remoteSettings = $tr(value,$c(13))
+			for j=1:1:$l(remoteSettings,$c(10)) {
+				set oneLine = $p(remoteSettings,$c(10),j)
+				set property = $p(oneLine,"=",1) continue:property=""
+				If (property="TargetConfigNames") {
+					set target = $p(oneLine,"=",2,*)
+					If target'="" { Set pArray(target)="" }
+				}
+			}
 		}
 	}
 	

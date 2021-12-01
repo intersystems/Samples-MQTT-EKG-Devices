@@ -4,7 +4,7 @@ using InterSystems.Data.IRISClient.ADO;
 
 namespace dc
 {
-    public class MyLibraryService : InterSystems.EnsLib.PEX.BusinessService
+    public class MQTTServicePEX : InterSystems.EnsLib.PEX.BusinessService
     {
         public string TargetConfigNames;
 
@@ -22,10 +22,29 @@ namespace dc
             String value = req.GetString("StringValue");
             LOGINFO("Received StringValue: " + value);
 
+            // Decode value (raw data) into rows. It depends on how they are encoded.
+            //
+            // ++Write your code here++
+            int rowcount = 2000;
+            int columncount = 4;
+
+            int[] array = new int[rowcount];
+            for (int i = 0; i < rowcount; i++)
+            {
+                array[i] = i;
+            }
+            // --Write your code here--
 
             IRIS iris = GatewayContext.GetIRIS();
+
+            // Save decoded values into IRIS via Native API
             seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
-            IRISObject newrequest = (IRISObject)iris.ClassMethodObject("Ens.StringContainer", "%New", seqno);
+            for (int i = 0; i < rowcount; i += columncount)
+            {
+                iris.ClassMethodStatusCode("Solution.RAWDATA", "INSERT", seqno, array[i], array[i+1], array[i+2], array[i + 3]);
+            }
+
+            IRISObject newrequest = (IRISObject)iris.ClassMethodObject("Solution.RAWDATAC", "%New", seqno);
 
             // Iterate through target business components and send request message
             string[] targetNames = TargetConfigNames.Split(',');

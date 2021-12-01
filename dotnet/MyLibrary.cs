@@ -14,7 +14,6 @@ namespace dc
         {
             long seqno;
 
-
             // Decode mqttmsg (raw data) into rows. It depends on how they are encoded.
             //
             // ++Write your code here++
@@ -37,6 +36,8 @@ namespace dc
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
+
                 // consider we are not in External gateway server context
                 String host = "localhost";
                 String port = "1972";
@@ -59,7 +60,9 @@ namespace dc
             }
 
             // Return a message.
-            IRISObject request = (IRISObject)iris.ClassMethodObject("Ens.StringContainer", "%New", seqno);
+            //IRISObject request = (IRISObject)iris.ClassMethodObject("Ens.StringContainer", "%New", seqno);
+            IRISObject request = (IRISObject)iris.ClassMethodObject("Solution.RAWDATAC", "%New", seqno);
+
             return request;
         }
 
@@ -99,6 +102,7 @@ namespace dc
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 // consider we are not in External gateway server context
                 iris = IRIS.CreateIRIS(connection);
             }
@@ -129,10 +133,11 @@ namespace dc
             return request;
         }
 
+        public int GetNumber() { return 123; }
+
 	    public String TestArray()
         {
             int rowcount = 2000;
-            int columncount = 4;
 
             int[] array = new int[rowcount];
             for (int i = 0; i < rowcount; i++)

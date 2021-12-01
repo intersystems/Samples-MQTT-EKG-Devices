@@ -5,3 +5,4 @@ datavol/share/*.data
 *.o
 *.so
 datavol/share/SJIS.txt
+src2
