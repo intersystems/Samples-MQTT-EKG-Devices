@@ -14,6 +14,8 @@ Ubuntsuは、[ubuntu-20.04.1-live-server-amd64.iso](http://old-releases.ubuntu.c
 
 # 起動方法
 ```
+$ git clone https://github.com/IRISMeister/Samples-MQTT-EKG-Devices.git
+$ cd Samples-MQTT-EKG-Devices
 $ ./setup.sh
 $ docker-compose up -d
 ```
@@ -26,24 +28,35 @@ $ docker-compose down
 
 |BS|送信先|備考|
 |:--|:--|:--|
-|From_MQTT_EXT|Process_MQTT|External Language Server明示使用。下記PEX利用を推奨|
-|From_MQTT_PEX|Process_MQTT|PEX使用。Decode及びIRISへの書き出しはC#で実行|
-|From_MQTT_PEX2|Process_MQTT|PEX使用。Decode及びIRISへの書き出しはC#で実行|
+|From_MQTT_EXT|Process_MQTT|External Language明示使用。下記PEX利用を推奨|
+|From_MQTT_PEX|Process_MQTT|PEX使用。配列を完全にリレーショナル化する例|
+|From_MQTT_PEX2|Process_MQTT|PEX使用。シリアライズ(文字列化)した配列を使用、応答メッセージをIRISで作成する例|
+|From_MQTT_PEX3|Process_MQTT|PEX使用。シリアライズ(文字列化)した配列を使用、応答メッセージをPEXで作成する例|
 |From_MQTT_PT|Decode_MQTT_PEX|標準のPassThroughサービスを使用|
 
 # データの送信方法
 ## コマンドライン
 ```
-$ docker-compose exec iris mosquitto_sub -v -h "mqttbroker" -p 1883 -t /ID_123/XGH/EKG/PT/#
 $ docker-compose exec iris mosquitto_pub -h "mqttbroker" -p 1883 -t /ID_123/XGH/EKG/PT -m "90"
 ```
+上記コマンドを実行すると、From_MQTT_PTがMQTTメッセージを受信し、その後の処理が実行されます。
+
 ただし、各BSは以下のTopicをSubscribeする設定になっています。
 |受信するBS|Topic|
 |:--|:--|
 |From_MQTT_EXT|/ID_123/XGH/EKG/EXT|  
 |From_MQTT_PEX|/ID_123/XGH/EKG/PEX|
 |From_MQTT_PEX2|/ID_123/XGH/EKG/PEX2|
+|From_MQTT_PEX3|/ID_123/XGH/EKG/PEX3|
 |From_MQTT_PT|/ID_123/XGH/EKG/PT|
+
+
+
+必要に応じてサブスクライブも可能です。
+```
+$ docker-compose exec iris mosquitto_sub -v -h "mqttbroker" -p 1883 -t /ID_123/XGH/EKG/PT/#
+```
+
 
 ## (バイナリ)ファイルを送る方法
 ```
@@ -61,14 +74,14 @@ root@d20238018cbc:~/share# python testdata.py
 ## MQTTクライアント機能を直接使用する方法
 ```
 $ docker-compose exec iris iris session iris
-USER>set tSC=##class(%Net.MQTT.Client).%New("tcp://mqttbroker:1883")
+USER>set m=##class(%Net.MQTT.Client).%New("tcp://mqttbroker:1883")
 USER>set tSC=m.Connect()
 USER>set tSC=m.Subscribe("/ID_123/XGH/EKG/PT/#")
-USER>set tSC=m.Receive(.topic,.message)
-USER>wriste
-m=<OBJECT REFERENCE>[1@%Net.MQTT.Client]
-message=184
-topic="/ID_123/XGH/EKG/Patient-0"
+USER>set tSC=m.Receive(.topic,.message,10000)
+USER>w topic
+/ID_123/XGH/EKG/PT
+USER>w message
+90
 USER>h
 $
 ```

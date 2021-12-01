@@ -54,13 +54,16 @@ namespace dc
             // Native API
             // Save decoded values into IRIS via Native API
             seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
+            IRISList list = new IRISList();
             for (int i = 0; i < elementcount; i += columncount)
             {
-                iris.ClassMethodStatusCode("Solution.RAWDATA", "INSERT", seqno, array[i], array[i+1], array[i+2], array[i + 3]);
+                list.Clear();
+                for (int j = 0; j < columncount; j++) {
+                    list.Add(array[i+j]);
+                }
+                iris.ClassMethodStatusCode("Solution.RAWDATA", "INSERT", seqno, list);
             }
 
-            // Return a message.
-            //IRISObject request = (IRISObject)iris.ClassMethodObject("Ens.StringContainer", "%New", seqno);
             IRISObject request = (IRISObject)iris.ClassMethodObject("Solution.RAWDATAC", "%New", seqno);
 
             return request;

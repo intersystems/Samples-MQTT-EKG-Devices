@@ -13,11 +13,14 @@ Property p3 As %Integer;
 
 Property p4 As %Integer;
 
-Index idxseq on seq;
+Index idxseq On seq;
 
-ClassMethod INSERT(seq, p1, p2, p3, p4) As %Status
+ClassMethod INSERT(seq, list) As %Status
 {
-    &SQL(INSERT INTO RAWDATA (seq, p1,p2,p3,p4) VALUES (:seq, :p1,:p2,:p3,:p4))
+    For i=1:1:4 {
+        Set p(i)=$LIST(list,i)
+    }
+    &SQL(INSERT INTO RAWDATA (seq, p1,p2,p3,p4) VALUES (:seq, :p(1),:p(2),:p(3),:p(4)))
     Quit $$$OK
 }
 
