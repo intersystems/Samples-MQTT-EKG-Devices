@@ -17,11 +17,11 @@ namespace dc
             // Decode mqttmsg (raw data) into rows. It depends on how they are encoded.
             //
             // ++Write your code here++
-            int rowcount = 2000;
+            int elementcount = 2000;
             int columncount = 4;
 
-            int[] array = new int[rowcount];
-            for (int i = 0; i < rowcount; i++)
+            int[] array = new int[elementcount];
+            for (int i = 0; i < elementcount; i++)
             {
                 array[i] = i;
             }
@@ -54,7 +54,7 @@ namespace dc
             // Native API
             // Save decoded values into IRIS via Native API
             seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
-            for (int i = 0; i < rowcount; i += columncount)
+            for (int i = 0; i < elementcount; i += columncount)
             {
                 iris.ClassMethodStatusCode("Solution.RAWDATA", "INSERT", seqno, array[i], array[i+1], array[i+2], array[i + 3]);
             }
@@ -73,11 +73,11 @@ namespace dc
             // Decode mqttmsg (raw data) into rows. It depends on how they are encoded.
             //
             // ++Write your code here++
-            int rowcount = 2000;
+            int elementcount = 2000;
             int columncount = 4;
 
-            int[] array = new int[rowcount];
-            for (int i = 0; i < rowcount; i++)
+            int[] array = new int[elementcount];
+            for (int i = 0; i < elementcount; i++)
             {
                 array[i] = i;
             }
@@ -117,7 +117,7 @@ namespace dc
             seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
 
             // split array into columns
-            for (int i = 0; i < rowcount; i += columncount)
+            for (int i = 0; i < elementcount; i += columncount)
             {
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@seq", seqno);
@@ -137,10 +137,10 @@ namespace dc
 
 	    public String TestArray()
         {
-            int rowcount = 2000;
+            int elementcount = 2000;
 
-            int[] array = new int[rowcount];
-            for (int i = 0; i < rowcount; i++)
+            int[] array = new int[elementcount];
+            for (int i = 0; i < elementcount; i++)
             {
                 array[i] = i;
             }

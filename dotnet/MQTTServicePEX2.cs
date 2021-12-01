@@ -28,10 +28,10 @@ namespace dc
             // Decode value (raw data) into rows. It depends on how they are encoded.
             //
             // ++Write your code here++
-            int rowcount = 2000;
+            int elementcount = 2000;
 
-            int[] array = new int[rowcount];
-            for (int i = 0; i < rowcount; i++)
+            int[] array = new int[elementcount];
+            for (int i = 0; i < elementcount; i++)
             {
                 array[i] = i;
             }
@@ -42,8 +42,9 @@ namespace dc
             // Save decoded values into IRIS via Native API
             seqno = (long)iris.ClassMethodLong("Solution.MQTTDATA", "GETNEWID");
             // Pass an array as a comma separated String value.
-            IRISObject newrequest = (IRISObject)iris.ClassMethodObject("Solution.MQTTDATA", "%New", topic,seqno,String.Join(",",array));
-
+            //IRISObject newrequest = (IRISObject)iris.ClassMethodObject("Solution.MQTTDATA", "%New", topic,seqno,String.Join(",",array));
+            MQTTRequest newrequest = new MQTTRequest(topic,seqno,String.Join(",",array));
+            
             // Iterate through target business components and send request message
             string[] targetNames = TargetConfigNames.Split(',');
             foreach (string name in targetNames)

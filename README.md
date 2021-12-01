@@ -34,9 +34,8 @@ $ docker-compose down
 # データの送信方法
 ## コマンドライン
 ```
-$ docker-compose exec iris bash
-# mosquitto_sub -v -h "mqttbroker" -p 1883 -t /ID_123/XGH/EKG/PT/#
-# mosquitto_pub -h "mqttbroker" -p 1883 -t /ID_123/XGH/EKG/PT -m "90"
+$ docker-compose exec iris mosquitto_sub -v -h "mqttbroker" -p 1883 -t /ID_123/XGH/EKG/PT/#
+$ docker-compose exec iris mosquitto_pub -h "mqttbroker" -p 1883 -t /ID_123/XGH/EKG/PT -m "90"
 ```
 ただし、各BSは以下のTopicをSubscribeする設定になっています。
 |受信するBS|Topic|

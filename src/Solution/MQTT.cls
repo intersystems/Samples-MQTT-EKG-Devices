@@ -40,6 +40,14 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="Url">tcp://mqttbroker:1883</Setting>
     <Setting Target="Host" Name="%remoteSettings">TargetConfigNames=Process_MQTT</Setting>
   </Item>
+  <Item Name="From_MQTT_PEX3" Category="" ClassName="Solution.BS.MQTTPEX" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+    <Setting Target="Host" Name="%remoteClassname">dc.MQTTServicePEX3</Setting>
+    <Setting Target="Host" Name="%gatewayHost">netgw</Setting>
+    <Setting Target="Host" Name="%gatewayPort">55556</Setting>
+    <Setting Target="Adapter" Name="Topic">/ID_123/XGH/EKG/PEX3/#</Setting>
+    <Setting Target="Adapter" Name="Url">tcp://mqttbroker:1883</Setting>
+    <Setting Target="Host" Name="%remoteSettings">TargetConfigNames=Process_MQTT</Setting>
+  </Item>
 </Production>
 }
 

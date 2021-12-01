@@ -4,14 +4,14 @@ using InterSystems.Data.IRISClient.ADO;
 
 namespace dc
 {
-    public class MQTTOperation : InterSystems.EnsLib.PEX.BusinessOperation
+    public class MQTTServicePEX3 : InterSystems.EnsLib.PEX.BusinessService
     {
+        public string TargetConfigNames;
 
         public override void OnTearDown() { } // Abstract method in PEX superclass. Must override.
         public override void OnInit() { } // Abstract method in PEX superclass. Must override.
 
-
-        public override object OnMessage(object request)
+        public override object OnProcessInput(object request)
         {
             long seqno;
 
@@ -24,12 +24,11 @@ namespace dc
 
             String topic = req.GetString("Topic");
             LOGINFO("Received topic: " + topic);
-            
+
             // Decode value (raw data) into rows. It depends on how they are encoded.
             //
             // ++Write your code here++
             int elementcount = 2000;
-            int columncount = 4;
 
             int[] array = new int[elementcount];
             for (int i = 0; i < elementcount; i++)
@@ -39,16 +38,21 @@ namespace dc
             // --Write your code here--
 
             IRIS iris = GatewayContext.GetIRIS();
-            // Native API
+
             // Save decoded values into IRIS via Native API
-            seqno = (long)iris.ClassMethodLong("Solution.RAWDATA", "GETNEWID");
-            for (int i = 0; i < elementcount; i += columncount)
+            seqno = (long)iris.ClassMethodLong("Solution.MQTTDATA", "GETNEWID");
+            // Pass an array as a comma separated String value.
+            IRISObject newrequest = (IRISObject)iris.ClassMethodObject("Solution.MQTTDATA", "%New", topic,seqno,String.Join(",",array));
+
+            // Iterate through target business components and send request message
+            string[] targetNames = TargetConfigNames.Split(',');
+            foreach (string name in targetNames)
             {
-                iris.ClassMethodStatusCode("Solution.RAWDATA", "INSERT", seqno, array[i], array[i + 1], array[i + 2], array[i + 3]);
+                SendRequestAsync(name, newrequest);
+                LOGINFO("Target:" + name);
+
             }
-
             return null;
-
         }
 
     }
