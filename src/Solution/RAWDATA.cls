@@ -40,34 +40,4 @@ ClassMethod GETNEWID() As %Integer
     Quit $INCREMENT(^RAWDATAUNIQ)
 }
 
-Storage Default
-{
-<Data name="RAWDATADefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>seq</Value>
-</Value>
-<Value name="3">
-<Value>p1</Value>
-</Value>
-<Value name="4">
-<Value>p2</Value>
-</Value>
-<Value name="5">
-<Value>p3</Value>
-</Value>
-<Value name="6">
-<Value>p4</Value>
-</Value>
-</Data>
-<DataLocation>^Solution.RAWDATAD</DataLocation>
-<DefaultData>RAWDATADefaultData</DefaultData>
-<IdLocation>^Solution.RAWDATAD</IdLocation>
-<IndexLocation>^Solution.RAWDATAI</IndexLocation>
-<StreamLocation>^Solution.RAWDATAS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }

@@ -24,28 +24,4 @@ ClassMethod GETNEWID() As %Integer
     Quit $INCREMENT(^MQTTDATAUNIQ)
 }
 
-Storage Default
-{
-<Data name="MQTTDATADefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>topic</Value>
-</Value>
-<Value name="3">
-<Value>seq</Value>
-</Value>
-<Value name="4">
-<Value>values</Value>
-</Value>
-</Data>
-<DataLocation>^Solution.MQTTDATAD</DataLocation>
-<DefaultData>MQTTDATADefaultData</DefaultData>
-<IdLocation>^Solution.MQTTDATAD</IdLocation>
-<IndexLocation>^Solution.MQTTDATAI</IndexLocation>
-<StreamLocation>^Solution.MQTTDATAS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }

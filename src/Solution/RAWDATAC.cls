@@ -19,25 +19,4 @@ Method %OnNew(seq As %BigInt) As %Status [ Private, ServerOnly = 1 ]
     Return $$$OK
 }
 
-Storage Default
-{
-<Data name="RAWDATACDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>seq</Value>
-</Value>
-<Value name="3">
-<Value>recs</Value>
-</Value>
-</Data>
-<DataLocation>^Solution.RAWDATACD</DataLocation>
-<DefaultData>RAWDATACDefaultData</DefaultData>
-<IdLocation>^Solution.RAWDATACD</IdLocation>
-<IndexLocation>^Solution.RAWDATACI</IndexLocation>
-<StreamLocation>^Solution.RAWDATACS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
-
 }
